@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cat /etc/hosts | while read ip nume _; do
+
+	if [[ -z $ip || $ip == \#* || $ip == *:* || $ip == 127.0.0.1 ]]; then
+		continue
+	fi
+
+	ip_real=$(nslookup "$nume" 8.8.8.8 | grep 'Address: ' | grep -v '#' | awk 'NR==1{print $2}') 
+	echo "$ip, $ip_real"
+	if [[ -n "$ip_real" && "$ip" != "$ip_real" ]]; then
+		echo "Bogus IP for $nume in /etc/hosts!.."
+	fi 
+done
+
+
