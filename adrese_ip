@@ -24,3 +24,4 @@ cat /etc/hosts | while read ip nume _; do
 done
 
 
+echo "Modificarea lui Omar"
